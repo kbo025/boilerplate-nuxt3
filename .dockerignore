@@ -1,0 +1,14 @@
+node_modules
+.nuxt
+.nitro
+dist
+.cache
+output
+logs
+*.log
+.git
+.gitignore
+Dockerfile
+README.md
+.env
+.env.*
