@@ -1,26 +1,33 @@
-# Usa una imagen oficial de Node.js
-FROM node:20-alpine
+# Build Stage 1
 
-# Establece el directorio de trabajo
+FROM node:22-alpine AS build
 WORKDIR /app
 
-# Copia los archivos de dependencias
-COPY package*.json ./
-COPY bun.lockb ./
-COPY pnpm-lock.yaml ./
-COPY yarn.lock ./
+# Copia los archivos necesarios para instalar dependencias
+COPY package.json package-lock.json ./
 
-# Instala las dependencias (ajusta según tu gestor)
+# Instala dependencias
 RUN npm install
 
-# Copia el resto del código
-COPY . .
+# Copia el resto del proyecto
+COPY . ./
 
-# Construye la aplicación
+# Construye el proyecto
 RUN npm run build
+RUN ls -la /app
 
-# Expone el puerto por defecto de Nuxt
-EXPOSE 3000
+# Build Stage 2
 
-# Comando para iniciar la app en producción
-CMD ["npm", "run", "start"]
+FROM node:22-alpine
+WORKDIR /app
+
+# Solo se necesita la carpeta .output del build
+COPY --from=build /app/.output/ ./
+
+# Cambia el puerto y host
+ENV PORT=8080
+ENV HOST=0.0.0.0
+
+EXPOSE 8080
+
+CMD ["node", "/app/server/index.mjs"]
