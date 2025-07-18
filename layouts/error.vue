@@ -7,11 +7,19 @@
   </div>
 </template>
 
-<script setup>
-defineProps({
-  error: Object
+<script lang='ts' setup>
+const props = withDefaults(defineProps<{
+  error?: {
+    message?: string
+    statusCode?: number
+  }
+}>(), {
+  error: undefined
 })
+
+const error = props.error ?? { message: 'Error inesperado', statusCode: 500 }
 </script>
+
 
 <style scoped>
 .error-page {
