@@ -7,13 +7,13 @@ WORKDIR /app
 COPY package.json package-lock.json ./
 
 # Instala dependencias
-RUN npm install
+RUN npm ci
 
 # Copia el resto del proyecto
 COPY . ./
 
 # Construye el proyecto
-RUN npm run build
+RUN npm run build && ls -la /app/.output
 RUN ls -la /app
 
 # Build Stage 2

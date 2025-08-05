@@ -28,4 +28,13 @@ export default defineNuxtConfig({
     '@utils': '/utils', // Reemplaza con la ruta correcta
   },
   plugins: [],
+  content: {
+    // Esto reduce posibles errores de resolución
+    markdown: {
+      mdc: false
+    },
+    experimental: {
+      nativeSqlite: false
+    }
+  }
 })
