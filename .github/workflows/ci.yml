@@ -41,15 +41,15 @@ jobs:
         run: gcloud auth configure-docker us-central1-docker.pkg.dev
 
       - name: Tag Docker image
-        run: docker tag nuxt-app us-central1-docker.pkg.dev/ntalks-466823/gcr.io/nuxt-app
+        run: docker tag nuxt-app us-central1-docker.pkg.dev/ntalks-466823/ntalks-repo/nuxt-app
 
       - name: Push Docker image to Artifact Registry
-        run: docker push us-central1-docker.pkg.dev/ntalks-466823/gcr.io/nuxt-app
+        run: docker push us-central1-docker.pkg.dev/ntalks-466823/ntalks-repo/nuxt-app
 
       - name: Deploy to Cloud Run
         run: |
           gcloud run deploy nuxt-app \
-            --image us-central1-docker.pkg.dev/ntalks-466823/gcr.io/nuxt-app \
+            --image us-central1-docker.pkg.dev/ntalks-466823/ntalks-repo/nuxt-app \
             --region us-central1 \
             --platform managed \
             --allow-unauthenticated
